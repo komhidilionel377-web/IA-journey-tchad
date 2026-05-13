@@ -1,0 +1,19 @@
+from sklearn.linear_model import LinearRegression
+
+# Données : [heures_revision, heures_sommeil] -> note_bac
+X = [[2,8], [3,8], [4,7], [5,7], [6,6], [7,6],
+     [8,5], [9,5], [10,4], [11,4], [12,4], [14,3], [15,3], [16,3]]
+y = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 19, 20]
+
+# Crée et entraine le modèle IA
+model = LinearRegression()
+model.fit(X, y)
+
+# Demande à l'utilisateur
+print("=== Prédicteur de Bac IA ===")
+h = float(input("Combien d'heures tu révises par jour? "))
+s = float(input("Combien d'heures tu dors par nuit? "))
+
+# Prédit
+prediction = model.predict([[h, s]])
+print(f"Note prédite au bac : {prediction[0]:.1f}/20")
