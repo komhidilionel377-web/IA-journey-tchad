@@ -19,3 +19,27 @@ if st.button("Prédire ma note"):
     st.success(f"Note prédite : {prediction:.1f}/20")
     if prediction >= 10:
         st.balloons()
+import matplotlib.pyplot as plt
+import numpy as np
+
+if st.button("Voir la courbe de progression"):
+    sleep_hours = sleep # on prend la valeur du slider sommeil actuel
+    revision_range = np.arange(0, 11, 1)
+    
+    # On prédit la note pour chaque heure de révision
+    predicted_notes = []
+    for r in revision_range:
+        note = model.predict([[r, sleep_hours]])[0]
+        predicted_notes.append(note)
+    
+    # Graphique
+    fig, ax = plt.subplots()
+    ax.plot(revision_range, predicted_notes, marker='o', color='#1E90FF')
+    ax.set_xlabel("Heures de révision/jour")
+    ax.set_ylabel("Note prédite au Bac")
+    ax.set_title(f"Évolution de la note pour {sleep_hours}h de sommeil")
+    ax.grid(True)
+    ax.set_ylim(0, 20)
+    
+    st.pyplot(fig)
+    st.write("💡 Astuce : Vise le point où la courbe commence à stagner. C’est ton sweet spot.")
