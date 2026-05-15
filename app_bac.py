@@ -1,4 +1,4 @@
-sleep_hours = sleep # on prend la valeur du sommeil actuelimport streamlit as st
+sommeil_hours = sleep # on prend la valeur du sommeil actuelimport streamlit as st
 from sklearn.linear_model import LinearRegression
 import numpy as np
 
@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 if st.button("Voir la courbe de progression"):
-    sleep_hours = sleep # on prend la valeur du slider sommeil actuel
+    sommeil_hours = sleep # on prend la valeur du slider sommeil actuel
     revision_range = np.arange(0, 11, 1)
     
     # On prédit la note pour chaque heure de révision
