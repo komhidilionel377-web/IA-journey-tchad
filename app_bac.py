@@ -1,4 +1,4 @@
-sommeil_hours = sleep # on prend la valeur du sommeil actuelimport streamlit as st
+sommeil_hours = sommeil# on prend la valeur du sommeil actuelimport streamlit as st
 from sklearn.linear_model import LinearRegression
 import numpy as np
 
