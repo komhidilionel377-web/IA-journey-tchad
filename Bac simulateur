@@ -1,0 +1,46 @@
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+st.set_page_config(page_title="Simulateur Bac", layout="centered")
+st.title("🎓 Simulateur de Note au Bac")
+st.write("Bouge les curseurs pour voir ta note prédite")
+
+# Données d'entraînement bidon
+X = np.array([[2, 6], [4, 7], [6, 8], [8, 7], [10, 8]])
+y = np.array([8, 11, 14, 15, 18])
+
+model = LinearRegression()
+model.fit(X, y)
+
+# Inputs
+revision = st.slider("Heures de révision par jour", 0, 10, 5)
+sommeil = st.slider("Heures de sommeil par nuit", 4, 12, 7)
+
+if st.button("Calculer ma note"):
+    note_predite = model.predict([[revision, sommeil]])[0]
+    note_predite = np.clip(note_predite, 0, 20)
+
+    st.success(f"**Note prédite : {note_predite:.1f}/20**")
+
+    if note_predite >= 10:
+        st.balloons()
+        st.write("Tu as ton Bac! 🎉")
+    else:
+        st.write("Faut réviser un peu plus 😅")
+
+# Graphique
+st.subheader("Courbe de progression")
+if st.button("Afficher le graphique"):
+    revisions = np.arange(0, 11, 1)
+    notes = [model.predict([[r, sommeil]])[0] for r in revisions]
+
+    fig, ax = plt.subplots()
+    ax.plot(revisions, notes, marker='o', color='#1E90FF', linewidth=2)
+    ax.set_xlabel("Heures de révision")
+    ax.set_ylabel("Note prédite")
+    ax.set_title(f"Pour {sommeil}h de sommeil")
+    ax.grid(True)
+    ax.set_ylim(0, 20)
+    st.pyplot(fig)
